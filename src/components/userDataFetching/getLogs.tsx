@@ -71,13 +71,9 @@ export async function getOriginal(docId:string){
 // serverTimestamp 타입 탈출 문제 해결하기
 // 순서의존문제 임시조치 해둔거 해결하기 (questions와 연계하여 entries 사용)
 // setLog, updateLog 서로 너무 비슷함. 리팩터링
-
-
-// 일기 삭제 --내용 자체는 삭제하지만 모든 내용의 길이는 백스텝화, 작성 시간과 myEmotions 남겨둠
-// 읽기 페이지 안에 컴포넌트로 넣는다.
+// 데이터를 더 효율적으로 저장할 순 없을까?
 
 // 로그인 로그아웃
-// 작년 5월쯤에 시작했음 뭐가 많이
 
 // 통계 로직 짜기
 /*

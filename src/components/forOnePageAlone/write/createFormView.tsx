@@ -39,19 +39,13 @@ export default function CreateFormView() {
   const date = new Date();
   const now = date.toString().split(" ").slice(0, 4).join(" ");
 
-  const writeNroute = async (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      await CreateFormLogic(e);
-      router.push("/");
-    } catch (err) {
-      throw err;
-    }
-  };
   return (
     <>
       <form
         onSubmit={async (e) => {
-          writeNroute(e);
+          await CreateFormLogic(e);
+          router.push("/");
+          router.refresh();
         }}
       >
         <div className="logTitleContainer">
