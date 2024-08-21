@@ -6,11 +6,10 @@ export default async function HomeLogList() {
   const logData = await getLogsInfo();
   const logListLogs = logData.map((log) => {
     return (
-      //동적 라우팅 : url object format -> https://nextjs.org/docs/app/api-reference/components/link
       <li className="logList_log" key={log.id}>
         <Link
           href={{
-            pathname: "/my-logs-viewer",
+            pathname: "/mood-of/my-logs-viewer",
             query: { title:log.title, docIdx: log.id },
           }}
         >

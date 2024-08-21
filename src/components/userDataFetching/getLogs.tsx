@@ -3,7 +3,7 @@ import { dbStore, user } from "@/firebase";
 import { collection, query, orderBy, limit, getDocs, getDoc, doc } from "firebase/firestore";
 import { logCon, log } from "@/interface/types";
 
-const userEmail = "heftycornerstone@gmail"; //(user) ? user.email : null //지금 접속한 유저의 이메일 받아오기
+const userEmail = "heftycornerstone@gmail"; //(user) ? user.email : null //지금 접속한 유저의 이메일 받아오기(.com제외하기)
 const docLocation = `user-data/${userEmail}/log`
 const q = query(
   collection(dbStore, docLocation),
@@ -12,7 +12,6 @@ const q = query(
 );// 일기를 읽다가 날짜가 지나가면 어떻게 표시하지
 
 //최근 14일 내에 작성한 일기 받아오기
-
 async function logsIn14days(){
   const docSnap = await getDocs(q);
   const filtered = docSnap.docs.filter((c) => {
@@ -28,8 +27,9 @@ async function logsIn14days(){
   return filtered
 }
 
+//일기 날짜, 제목 받아오기
 export async function getLogsInfo() {
-  //날짜, 제목
+  
   const docSnap = await logsIn14days();
   const data = docSnap.map((c, i) => {
     const { date, title } = c.data();
@@ -39,8 +39,9 @@ export async function getLogsInfo() {
   return data;
 }
 
+//일기 날짜, 제목, 내용, 감정, dateStamp, docId 받아오기
 export async function getLogByIdx(docIdx: number) {
-  //날짜, 제목, 내용
+  
   const docSnap = await logsIn14days();
   const log = docSnap[docIdx];
   const docId = log.id
@@ -56,6 +57,7 @@ export async function getLogByIdx(docIdx: number) {
   return {title, emotion, rawDate:date, date: logDate, contents: contents, docId:docId};
 }
 
+// 일기 원본 내용 받아오기
 export async function getOriginal(docId:string){
   const docRef = doc(dbStore, docLocation, docId);
   const docSnap = await getDoc(docRef);
@@ -74,6 +76,7 @@ export async function getOriginal(docId:string){
 // 데이터를 더 효율적으로 저장할 순 없을까?
 
 // 로그인 로그아웃
+// 지금 접속한 유저의 이메일을 사용해서 데이터 패칭하도록 하기 : getlogs, updateLog
 
 // 통계 로직 짜기
 /*
@@ -87,6 +90,7 @@ export async function getOriginal(docId:string){
 */
 // 통계 로직 반영해서 홈 화면 바꾸기(아직은 로직에 따른 메세지만 띄워보자)
 // 통계 화면 임시로 띄우기
+
 /*
 1
 이모션 비율 표시  -  작성 시간 비율 표시
@@ -101,9 +105,3 @@ export async function getOriginal(docId:string){
 
 // 이모션 패드 구현
 // 통계 그래프 구현
-
-// 로그인 관련
-// 지금 접속한 유저의 이메일을 사용해서 데이터 패칭하도록 하기 : getlogs, updateLog
-// 프로텍티드 라우트 //hoc vs serverside protection  :  https://www.freecodecamp.org/news/secure-routes-in-next-js/
-// --로그인 여부 뿐만이 아님. !하루 지난 일기는 수정 페이지 접근 불가해야 함!
-// ----------------------------------------

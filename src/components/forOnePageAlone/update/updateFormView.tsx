@@ -1,7 +1,7 @@
 "use client";
 import questions from "@/components/forMultiPages/logQuestions";
 import ChooseEmotion from "../write/chooseEmotions";
-import createFormLogic from "../write/createFormLogic";
+import createFormLogic from "../../forMultiPages/loggingFormLogic";
 import { logCon, logEmot } from "@/interface/types";
 
 interface data {
